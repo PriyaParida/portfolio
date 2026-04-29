@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Priya Ranjan Parida — Data Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#07090f;--bg2:#0d1117;--bg3:#111827;
+  --teal:#00ffc8;--teal2:#00d4a8;--teal-glow:rgba(0,255,200,0.12);--teal-border:rgba(0,255,200,0.22);
+  --purple:#a78bfa;--blue:#60a5fa;
+  --text:#dde4f0;--muted:#667080;--muted2:#4a5568;
+  --border:rgba(255,255,255,0.06);--card:rgba(255,255,255,0.03);--card2:rgba(255,255,255,0.05);
+  --radius:14px;--radius-sm:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Space Grotesk',sans-serif;
+  background:var(--bg);color:var(--text);
+  line-height:1.7;overflow-x:hidden;min-height:100vh;
+}
+
+/* CANVAS PARTICLES */
+#canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.5;}
+
+/* GLOW ORBS */
+.orb{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;}
+.orb1{width:500px;height:500px;background:rgba(0,255,200,0.04);top:-100px;right:-100px;}
+.orb2{width:400px;height:400px;background:rgba(96,165,250,0.04);bottom:10%;left:-100px;}
+
+/* ===== NAV ===== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 5%;
+  background:rgba(7,9,15,0.8);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.logo{
+  font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;
+  color:var(--teal);text-decoration:none;letter-spacing:0.05em;
+  display:flex;align-items:center;gap:10px;
+}
+.logo-dot{
+  width:8px;height:8px;border-radius:50%;background:var(--teal);
+  animation:blink 2s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.3;transform:scale(0.7);}}
+
+/* TABS NAV */
+.nav-tabs{display:flex;gap:4px;background:rgba(255,255,255,0.04);border-radius:10px;padding:4px;}
+.nav-tab{
+  padding:6px 18px;border-radius:7px;border:none;background:transparent;
+  color:var(--muted);cursor:pointer;font-family:'Space Grotesk',sans-serif;
+  font-size:0.82rem;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;
+  transition:all 0.2s;white-space:nowrap;
+}
+.nav-tab:hover{color:var(--text);}
+.nav-tab.active{background:rgba(0,255,200,0.1);color:var(--teal);border:1px solid var(--teal-border);}
+
+/* ===== PAGES ===== */
+.page{
+  display:none;padding-top:80px;min-height:100vh;
+  position:relative;z-index:1;
+  animation:fadeSlide 0.4s ease forwards;
+}
+.page.active{display:block;}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* ===== HERO ===== */
+#page-home{
+  display:none;align-items:center;justify-content:center;
+  padding:0 5%;min-height:100vh;
+}
+#page-home.active{display:flex;}
+.hero-inner{max-width:900px;width:100%;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--teal-glow);border:1px solid var(--teal-border);
+  border-radius:100px;padding:6px 18px;margin-bottom:2.5rem;
+  font-size:0.78rem;color:var(--teal);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;
+}
+.hero-badge span{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:blink 2s infinite;}
+h1{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(3.2rem,9vw,6.5rem);line-height:0.95;letter-spacing:-0.02em;
+  margin-bottom:1.5rem;
+}
+.h1-name{display:block;}
+.h1-accent{
+  display:block;
+  background:linear-gradient(90deg,var(--teal),var(--blue));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-role{
+  font-size:clamp(1rem,2vw,1.25rem);color:var(--muted);
+  margin-bottom:0.5rem;font-weight:400;
+}
+.typewriter{
+  font-size:clamp(0.9rem,1.8vw,1.1rem);color:var(--teal2);font-weight:500;
+  margin-bottom:2.5rem;min-height:1.5em;
+}
+.cursor{display:inline-block;width:2px;height:1em;background:var(--teal);vertical-align:middle;animation:blink 0.8s step-end infinite;margin-left:2px;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:4rem;}
+.btn-p{
+  background:var(--teal);color:#07090f;padding:0.75rem 2rem;
+  border-radius:var(--radius-sm);font-weight:700;font-size:0.88rem;
+  text-decoration:none;letter-spacing:0.04em;transition:all 0.2s;
+  display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;
+}
+.btn-p:hover{opacity:0.85;transform:translateY(-2px);}
+.btn-s{
+  border:1px solid var(--teal-border);color:var(--teal);background:transparent;
+  padding:0.75rem 2rem;border-radius:var(--radius-sm);font-weight:500;
+  font-size:0.88rem;text-decoration:none;letter-spacing:0.04em;
+  transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+}
+.btn-s:hover{background:var(--teal-glow);}
+.hero-stats{
+  display:flex;gap:3rem;padding-top:2.5rem;border-top:1px solid var(--border);flex-wrap:wrap;
+}
+.stat .num{
+  font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;
+  background:linear-gradient(135deg,var(--teal),var(--blue));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.stat .lbl{font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:2px;}
+
+/* ===== SECTION WRAPPER ===== */
+.section{padding:5rem 5%;max-width:1200px;margin:0 auto;}
+.sec-label{font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal);font-weight:600;margin-bottom:0.5rem;}
+h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:800;line-height:1.1;margin-bottom:2.5rem;}
+
+/* ===== ABOUT ===== */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.about-p{color:var(--muted);margin-bottom:1rem;font-size:1rem;}
+.about-p strong{color:var(--text);font-weight:500;}
+.hcard{
+  background:var(--card);border:1px solid var(--border);border-left:2px solid var(--teal);
+  border-radius:var(--radius-sm);padding:1.1rem 1.4rem;margin-bottom:0.9rem;
+  transition:border-color 0.2s,transform 0.2s;
+}
+.hcard:hover{border-color:var(--teal-border);transform:translateX(4px);}
+.hcard h4{font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;margin-bottom:0.2rem;}
+.hcard p{font-size:0.82rem;color:var(--muted);line-height:1.5;}
+
+/* ===== SKILLS ===== */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem;}
+.scat{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.6rem;transition:border-color 0.2s;
+}
+.scat:hover{border-color:var(--teal-border);}
+.scat-title{
+  font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;
+  color:var(--teal);font-weight:600;margin-bottom:1rem;
+}
+.tags{display:flex;flex-wrap:wrap;gap:7px;}
+.tag{
+  background:rgba(255,255,255,0.04);border:1px solid var(--border);
+  border-radius:5px;padding:4px 11px;font-size:0.8rem;color:var(--text);
+  transition:all 0.2s;cursor:default;
+}
+.tag:hover,.tag.hot{background:var(--teal-glow);border-color:var(--teal-border);color:var(--teal);}
+
+/* ===== EXPERIENCE ===== */
+.exp-list{display:flex;flex-direction:column;gap:1.5rem;}
+.ecard{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:2rem 2.2rem;position:relative;overflow:hidden;
+  transition:border-color 0.25s,transform 0.25s;cursor:default;
+}
+.ecard::before{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,var(--teal),var(--blue));
+  border-radius:2px 0 0 2px;
+}
+.ecard:hover{border-color:var(--teal-border);transform:translateX(3px);}
+.emeta{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;margin-bottom:0.3rem;}
+.erole{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;}
+.eperiod{
+  font-size:0.75rem;color:var(--teal);font-weight:600;
+  background:var(--teal-glow);border:1px solid var(--teal-border);
+  padding:3px 12px;border-radius:100px;white-space:nowrap;
+}
+.ecompany{font-size:0.87rem;color:var(--muted);margin-bottom:1.2rem;}
+.ebullets{list-style:none;}
+.ebullets li{
+  font-size:0.88rem;color:var(--muted);padding:4px 0 4px 1.3rem;position:relative;
+}
+.ebullets li::before{content:'→';position:absolute;left:0;color:var(--teal);font-size:0.75rem;top:6px;}
+.estack{display:flex;flex-wrap:wrap;gap:5px;margin-top:1rem;}
+.pill{
+  font-size:0.72rem;padding:2px 10px;background:rgba(0,255,200,0.05);
+  border:1px solid var(--teal-border);border-radius:4px;color:var(--teal2);
+}
+
+/* ===== EDUCATION ===== */
+.edu-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:2.5rem;display:flex;gap:2rem;align-items:flex-start;
+  transition:border-color 0.2s;
+}
+.edu-card:hover{border-color:var(--teal-border);}
+.edu-icon{
+  width:58px;height:58px;border-radius:12px;
+  background:var(--teal-glow);border:1px solid var(--teal-border);
+  display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;
+}
+.edu-info h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:0.3rem;}
+.edu-uni{color:var(--muted);font-size:0.88rem;margin-bottom:0.8rem;}
+.edu-badges{display:flex;gap:7px;flex-wrap:wrap;}
+.edu-badge{
+  background:rgba(255,255,255,0.04);border:1px solid var(--border);
+  border-radius:5px;padding:3px 11px;font-size:0.78rem;color:var(--muted);
+}
+
+/* ===== RESUME TAB ===== */
+.resume-layout{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;}
+.resume-panel{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;
+}
+.resume-panel h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:0.4rem;}
+.resume-panel .sub{font-size:0.82rem;color:var(--muted);margin-bottom:1.5rem;}
+
+/* Upload zone */
+.upload-zone{
+  border:2px dashed var(--teal-border);border-radius:var(--radius);
+  padding:3rem 2rem;text-align:center;cursor:pointer;
+  transition:all 0.25s;background:var(--teal-glow);position:relative;
+}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--teal);background:rgba(0,255,200,0.08);}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.upload-icon{font-size:2.5rem;margin-bottom:1rem;}
+.upload-zone p{font-size:0.88rem;color:var(--muted);}
+.upload-zone strong{color:var(--teal);font-weight:600;}
+
+/* Current resume */
+.current-resume{display:none;}
+.resume-file-card{
+  background:rgba(0,255,200,0.05);border:1px solid var(--teal-border);
+  border-radius:var(--radius-sm);padding:1.2rem 1.4rem;
+  display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;
+}
+.file-icon{font-size:2rem;flex-shrink:0;}
+.file-info{flex:1;min-width:0;}
+.file-name{font-weight:600;font-size:0.9rem;color:var(--teal);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.file-meta{font-size:0.75rem;color:var(--muted);margin-top:2px;}
+.file-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:0.8rem;}
+.btn-danger{
+  background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);
+  color:#f87171;padding:6px 14px;border-radius:6px;font-size:0.8rem;
+  font-weight:500;cursor:pointer;transition:all 0.2s;font-family:'Space Grotesk',sans-serif;
+}
+.btn-danger:hover{background:rgba(239,68,68,0.2);}
+.btn-replace{
+  background:rgba(0,255,200,0.08);border:1px solid var(--teal-border);
+  color:var(--teal);padding:6px 14px;border-radius:6px;font-size:0.8rem;
+  font-weight:500;cursor:pointer;transition:all 0.2s;font-family:'Space Grotesk',sans-serif;
+}
+.btn-replace:hover{background:rgba(0,255,200,0.15);}
+
+/* Preview panel */
+.preview-area{
+  border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);
+  background:var(--bg2);min-height:500px;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:1rem;
+}
+.preview-placeholder{text-align:center;color:var(--muted);}
+.preview-placeholder .icon{font-size:3rem;margin-bottom:0.5rem;opacity:0.4;}
+.preview-placeholder p{font-size:0.85rem;}
+#pdf-iframe{width:100%;height:600px;border:none;display:none;}
+
+/* Status messages */
+.status-msg{
+  padding:10px 14px;border-radius:var(--radius-sm);font-size:0.82rem;
+  margin-bottom:1rem;display:none;
+}
+.status-msg.success{background:rgba(0,255,200,0.08);border:1px solid var(--teal-border);color:var(--teal);}
+.status-msg.error{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.3);color:#f87171;}
+.status-msg.info{background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.25);color:var(--blue);}
+
+/* Storage note */
+.storage-note{
+  background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.2);
+  border-radius:var(--radius-sm);padding:1rem 1.2rem;font-size:0.78rem;color:#93c5fd;margin-top:1rem;
+  line-height:1.6;
+}
+.storage-note strong{color:var(--blue);}
+
+/* Visitor download card */
+.download-card{
+  background:linear-gradient(135deg,rgba(0,255,200,0.08),rgba(96,165,250,0.06));
+  border:1px solid var(--teal-border);border-radius:var(--radius);
+  padding:2.5rem;text-align:center;
+}
+.download-card h3{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:0.5rem;}
+.download-card p{color:var(--muted);font-size:0.88rem;margin-bottom:1.5rem;}
+
+/* ===== CONTACT ===== */
+.contact-wrap{max-width:680px;margin:0 auto;text-align:center;}
+.contact-sub{color:var(--muted);margin-bottom:2.5rem;font-size:1rem;}
+.contact-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1rem;margin-bottom:2.5rem;}
+.ccard{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.5rem;text-align:center;text-decoration:none;color:var(--text);
+  transition:all 0.2s;
+}
+.ccard:hover{border-color:var(--teal-border);transform:translateY(-3px);}
+.ccard .ci{font-size:1.3rem;margin-bottom:0.5rem;}
+.ccard .cl{font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.3rem;}
+.ccard .cv{font-size:0.82rem;color:var(--teal);font-weight:500;}
+
+/* FOOTER */
+footer{
+  text-align:center;padding:2rem 5%;border-top:1px solid var(--border);
+  font-size:0.78rem;color:var(--muted2);position:relative;z-index:1;
+}
+
+/* SCROLL FADE */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.fade-up.in{opacity:1;transform:translateY(0);}
+
+/* PROGRESS BAR */
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--teal),var(--blue));z-index:999;width:0%;transition:width 0.1s;}
+
+@media(max-width:768px){
+  .about-grid,.resume-layout{grid-template-columns:1fr;}
+  .nav-tabs .nav-tab{padding:5px 10px;font-size:0.7rem;}
+  h1{font-size:2.8rem;}
+  .hero-stats{gap:1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+<canvas id="canvas"></canvas>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#" onclick="showPage('home')">
+    <span class="logo-dot"></span> PRP
+  </a>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('home')">Home</button>
+    <button class="nav-tab" onclick="showPage('about')">About</button>
+    <button class="nav-tab" onclick="showPage('skills')">Skills</button>
+    <button class="nav-tab" onclick="showPage('experience')">Experience</button>
+    <button class="nav-tab" onclick="showPage('resume')">Resume</button>
+    <button class="nav-tab" onclick="showPage('contact')">Contact</button>
+  </div>
+</nav>
+
+<!-- ===== HOME ===== -->
+<div id="page-home" class="page active">
+  <div class="hero-inner">
+    <div class="hero-badge"><span></span> Open to Work · Data Engineer</div>
+    <h1>
+      <span class="h1-name">Priya Ranjan</span>
+      <span class="h1-accent">Parida.</span>
+    </h1>
+    <div class="hero-role">Azure Data Engineer · Bengaluru, India</div>
+    <div class="typewriter" id="tw"></div>
+    <div class="hero-btns">
+      <button class="btn-p" onclick="showPage('contact')">✉ Get in Touch</button>
+      <button class="btn-s" onclick="showPage('experience')">View My Work →</button>
+      <button class="btn-s" onclick="showPage('resume')">📄 My Resume</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="num" data-count="4">0</div><div class="lbl">Years Experience</div></div>
+      <div class="stat"><div class="num" data-count="2.5">0</div><div class="lbl">Years Azure Engineering</div></div>
+      <div class="stat"><div class="num" data-count="3">0</div><div class="lbl">Enterprise Clients</div></div>
+      <div class="stat"><div class="num">∞</div><div class="lbl">Pipelines Delivered</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ABOUT ===== -->
+<div id="page-about" class="page">
+  <div class="section">
+    <div class="sec-label">// About Me</div>
+    <h2>Engineer. Builder.<br>Data Architect.</h2>
+    <div class="about-grid">
+      <div class="fade-up">
+        <p class="about-p">I'm a <strong>Data Engineer based in Bengaluru</strong> with over 4 years of experience building cloud-native data solutions on Azure. Currently at <strong>Cognizant</strong>, I work on the OPTUM-UHG healthcare account designing ADF pipelines, Databricks workloads, and centralised logging frameworks.</p>
+        <p class="about-p">My work spans the full data stack — ingestion, transformation, storage, and orchestration — with a deep focus on <strong>reliability, incremental loads, and performance at scale</strong> using PySpark and Delta Lake.</p>
+        <p class="about-p">I hold a B.Tech in Electrical and Electronics Engineering from <strong>GIET University, Odisha</strong>, and bring both analytical rigour and engineering pragmatism to every project.</p>
+      </div>
+      <div class="fade-up">
+        <div class="hcard"><h4>🏗️ Current Role</h4><p>Associate – Projects at Cognizant Technology Solutions<br>Client: OPTUM-UHG (Healthcare Data)</p></div>
+        <div class="hcard"><h4>📍 Location</h4><p>Bengaluru, Karnataka, India<br>Open to Hybrid / Remote roles</p></div>
+        <div class="hcard"><h4>🟢 Availability</h4><p>Actively seeking new opportunities<br>Available from 22nd May 2026</p></div>
+        <div class="hcard"><h4>🎯 Target Roles</h4><p>Data Engineer · Azure Data Engineer · Cloud Data Engineer · Big Data Engineer</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SKILLS ===== -->
+<div id="page-skills" class="page">
+  <div class="section">
+    <div class="sec-label">// Technical Stack</div>
+    <h2>Tools I Work With</h2>
+    <div class="skills-grid">
+      <div class="scat fade-up">
+        <div class="scat-title">☁️ Azure Services</div>
+        <div class="tags">
+          <span class="tag hot">Azure Data Factory</span><span class="tag hot">Azure Databricks</span>
+          <span class="tag">Azure Data Lake</span><span class="tag">Azure SQL Database</span>
+          <span class="tag">Azure Key Vault</span><span class="tag">Azure Blob Storage</span>
+          <span class="tag">Azure Automation</span><span class="tag">Azure Logic Apps</span>
+        </div>
+      </div>
+      <div class="scat fade-up">
+        <div class="scat-title">⚙️ Data Processing</div>
+        <div class="tags">
+          <span class="tag hot">PySpark</span><span class="tag hot">Spark SQL</span>
+          <span class="tag hot">Delta Lake</span><span class="tag">Parquet</span>
+          <span class="tag">Incremental Loads</span><span class="tag">ETL / ELT</span>
+          <span class="tag">Centralised Logging</span>
+        </div>
+      </div>
+      <div class="scat fade-up">
+        <div class="scat-title">💾 Languages & Databases</div>
+        <div class="tags">
+          <span class="tag hot">Python</span><span class="tag hot">SQL</span>
+          <span class="tag">T-SQL</span><span class="tag">SQL Server</span>
+          <span class="tag">MySQL</span><span class="tag">Stored Procedures</span>
+          <span class="tag">Query Optimisation</span>
+        </div>
+      </div>
+      <div class="scat fade-up">
+        <div class="scat-title">🛠️ Tools & Practices</div>
+        <div class="tags">
+          <span class="tag">Jupyter Notebook</span><span class="tag">VS Code</span>
+          <span class="tag">Git</span><span class="tag">Agile / Scrum</span>
+          <span class="tag">Production Support</span><span class="tag">Data Automation</span>
+          <span class="tag">Dashboards</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== EXPERIENCE ===== -->
+<div id="page-experience" class="page">
+  <div class="section">
+    <div class="sec-label">// Work Experience</div>
+    <h2>Where I've Built</h2>
+    <div class="exp-list">
+      <div class="ecard fade-up">
+        <div class="emeta"><div class="erole">Associate – Projects</div><span class="eperiod">Jan 2025 – Present</span></div>
+        <div class="ecompany">Cognizant Technology Solutions · Client: OPTUM-UHG (Healthcare)</div>
+        <ul class="ebullets">
+          <li>Designing and maintaining ADF pipelines for large-scale healthcare data ingestion and transformation.</li>
+          <li>Building PySpark and Spark SQL transformations in Azure Databricks, processing Delta and Parquet formats at enterprise scale.</li>
+          <li>Implementing incremental load patterns to optimise performance and reduce pipeline runtimes significantly.</li>
+          <li>Architecting a centralised logging framework using Azure Key Vault and Azure SQL for secrets management and audit trails.</li>
+          <li>Collaborating with cross-functional teams across ingestion, transformation, and governance layers.</li>
+        </ul>
+        <div class="estack">
+          <span class="pill">Azure Data Factory</span><span class="pill">Azure Databricks</span>
+          <span class="pill">PySpark</span><span class="pill">Spark SQL</span>
+          <span class="pill">Delta Lake</span><span class="pill">Azure Key Vault</span><span class="pill">Parquet</span>
+        </div>
+      </div>
+      <div class="ecard fade-up">
+        <div class="emeta"><div class="erole">Associate Software Engineer</div><span class="eperiod">Aug 2023 – Jul 2025</span></div>
+        <div class="ecompany">SOAIS · Client: DOMTAR (Pulp & Paper Manufacturing)</div>
+        <ul class="ebullets">
+          <li>Developed and maintained Azure Data Factory pipelines for data migration and integration across enterprise systems.</li>
+          <li>Built Azure Logic Apps workflows for automated business process triggers and cross-system integrations.</li>
+          <li>Provided production support for critical data pipelines, troubleshooting and resolving incidents to minimise downtime.</li>
+          <li>Worked within Agile sprints for iterative delivery and sprint planning.</li>
+        </ul>
+        <div class="estack">
+          <span class="pill">Azure Data Factory</span><span class="pill">Azure Logic Apps</span>
+          <span class="pill">Python</span><span class="pill">SQL</span><span class="pill">Agile</span>
+        </div>
+      </div>
+      <div class="ecard fade-up">
+        <div class="emeta"><div class="erole">Associate Software Engineer</div><span class="eperiod">Oct 2021 – Jul 2023</span></div>
+        <div class="ecompany">Prolifics · Client: Arden University (Higher Education)</div>
+        <ul class="ebullets">
+          <li>Wrote complex SQL queries and stored procedures for analytical reporting and data extraction.</li>
+          <li>Built interactive dashboards enabling stakeholders to track enrolment, performance, and operational KPIs.</li>
+          <li>Automated recurring data tasks, reducing manual processing effort significantly.</li>
+          <li>Delivered reports aligned with business requirements through close collaboration with end-users.</li>
+        </ul>
+        <div class="estack">
+          <span class="pill">SQL Server</span><span class="pill">T-SQL</span>
+          <span class="pill">Stored Procedures</span><span class="pill">Dashboards</span><span class="pill">Data Automation</span>
+        </div>
+      </div>
+
+      <div class="sec-label" style="margin-top:3rem;">// Education</div>
+      <div class="edu-card fade-up" style="margin-top:0.5rem;">
+        <div class="edu-icon">🎓</div>
+        <div class="edu-info">
+          <h3>B.Tech – Electrical and Electronics Engineering</h3>
+          <div class="edu-uni">GIET University, Gunupur, Odisha</div>
+          <div class="edu-badges">
+            <span class="edu-badge">2017 – 2021</span>
+            <span class="edu-badge">Odisha, India</span>
+            <span class="edu-badge">Full-time</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RESUME ===== -->
+<div id="page-resume" class="page">
+  <div class="section">
+    <div class="sec-label">// Resume</div>
+    <h2>My Resume</h2>
+
+    <!-- VISITOR VIEW (shown when resume exists) -->
+    <div id="visitor-view" style="display:none;" class="fade-up">
+      <div class="download-card">
+        <div style="font-size:3rem;margin-bottom:0.8rem;">📄</div>
+        <h3>Priya Ranjan Parida</h3>
+        <p id="visitor-filename">Data Engineer Resume</p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem;">
+          <a id="download-btn" class="btn-p" href="#" download>⬇ Download Resume</a>
+          <button class="btn-s" onclick="togglePreview()">👁 Preview</button>
+        </div>
+        <div id="pdf-preview-wrap" style="display:none;margin-top:1.5rem;border-radius:var(--radius);overflow:hidden;">
+          <iframe id="pdf-iframe" src="" style="width:100%;height:600px;border:none;border-radius:var(--radius);"></iframe>
+        </div>
+      </div>
+      <div style="margin-top:2rem;text-align:center;">
+        <button class="btn-replace" onclick="showAdminPanel()">🔁 Update Resume</button>
+        &nbsp;
+        <button class="btn-danger" onclick="deleteResume()">🗑 Delete Resume</button>
+      </div>
+    </div>
+
+    <!-- UPLOAD VIEW (shown when no resume) -->
+    <div id="upload-view" class="resume-layout fade-up">
+      <div class="resume-panel">
+        <h3>Upload Your Resume</h3>
+        <p class="sub">PDF format recommended · Max 8MB · Stored securely in your browser</p>
+
+        <div class="status-msg" id="status-msg"></div>
+
+        <div class="upload-zone" id="upload-zone">
+          <input type="file" id="resume-file" accept=".pdf,.doc,.docx" onchange="handleFileUpload(this)">
+          <div class="upload-icon">📤</div>
+          <p><strong>Drag & drop your resume</strong><br>or click to browse</p>
+          <p style="margin-top:0.5rem;font-size:0.75rem;color:var(--muted2);">PDF, DOC, DOCX · up to 8MB</p>
+        </div>
+
+        <div class="storage-note">
+          <strong>ℹ️ How this works:</strong> Your resume is saved in <strong>this browser's storage</strong> on your device. When you host this page on Netlify and visit it from your laptop, it will always be there. Recruiters visiting your live site will see a download button once you upload.
+        </div>
+      </div>
+
+      <div class="resume-panel">
+        <h3>Preview</h3>
+        <p class="sub">Your resume will appear here after upload</p>
+        <div class="preview-area" id="preview-area">
+          <div class="preview-placeholder">
+            <div class="icon">📋</div>
+            <p>No resume uploaded yet</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONTACT ===== -->
+<div id="page-contact" class="page">
+  <div class="section">
+    <div class="contact-wrap">
+      <div class="sec-label">// Contact</div>
+      <h2>Let's Build Together</h2>
+      <p class="contact-sub">I'm actively looking for my next Data Engineer role. If you're hiring or want to connect, I'd love to hear from you.</p>
+      <div class="contact-cards">
+        <a class="ccard" href="mailto:parida.7.priyaranjan@gmail.com">
+          <div class="ci">✉️</div><div class="cl">Email</div>
+          <div class="cv">parida.7.priyaranjan<br>@gmail.com</div>
+        </a>
+        <a class="ccard" href="tel:+916371304502">
+          <div class="ci">📞</div><div class="cl">Phone</div>
+          <div class="cv">+91 6371 304 502</div>
+        </a>
+        <div class="ccard">
+          <div class="ci">📍</div><div class="cl">Location</div>
+          <div class="cv">Bengaluru, Karnataka<br>India</div>
+        </div>
+      </div>
+      <a class="btn-p"
+        href="https://mail.google.com/mail/?view=cm&to=parida.7.priyaranjan@gmail.com&su=Let%27s%20Connect%20%E2%80%94%20Data%20Engineer%20Opportunity&body=Hi%20Priya%20Ranjan%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20I%20would%20love%20to%20connect%20with%20you%20regarding%20an%20exciting%20opportunity.%0A%0A%5BPlease%20share%20your%20message%20or%20opportunity%20details%20here%5D%0A%0ALooking%20forward%20to%20hearing%20from%20you%21%0A%0ABest%20regards%2C%0A%5BYour%20Name%5D"
+        target="_blank" style="display:inline-flex;margin:0 auto;">
+        ✉️ &nbsp; Send me a message
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Designed & Built for Priya Ranjan Parida &nbsp;·&nbsp; Data Engineer &nbsp;·&nbsp; Bengaluru, India</p>
+</footer>
+
+<script>
+// ===== TABS =====
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  const page = document.getElementById('page-' + id);
+  if (page) page.classList.add('active');
+  const tabs = document.querySelectorAll('.nav-tab');
+  const labels = ['home','about','skills','experience','resume','contact'];
+  const idx = labels.indexOf(id);
+  if (idx >= 0 && tabs[idx]) tabs[idx].classList.add('active');
+  window.scrollTo(0, 0);
+  setTimeout(activateFades, 100);
+  if (id === 'resume') loadResumeState();
+}
+
+// ===== PARTICLES =====
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+for (let i = 0; i < 60; i++) {
+  particles.push({
+    x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+    r: Math.random() * 1.5 + 0.3,
+    vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
+    a: Math.random() * 0.5 + 0.1
+  });
+}
+function animParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0) p.x = canvas.width;
+    if (p.x > canvas.width) p.x = 0;
+    if (p.y < 0) p.y = canvas.height;
+    if (p.y > canvas.height) p.y = 0;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0,255,200,${p.a})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(animParticles);
+}
+animParticles();
+
+// ===== TYPEWRITER =====
+const phrases = [
+  'Building scalable Azure data pipelines.',
+  'Transforming raw data into reliable intelligence.',
+  'PySpark · Delta Lake · Azure Databricks.',
+  'Turning enterprise chaos into clean data flows.'
+];
+let pi = 0, ci = 0, deleting = false;
+const tw = document.getElementById('tw');
+function type() {
+  const phrase = phrases[pi];
+  if (!deleting) {
+    tw.innerHTML = phrase.slice(0, ci + 1) + '<span class="cursor"></span>';
+    ci++;
+    if (ci === phrase.length) { deleting = true; setTimeout(type, 1800); return; }
+    setTimeout(type, 55);
+  } else {
+    tw.innerHTML = phrase.slice(0, ci - 1) + '<span class="cursor"></span>';
+    ci--;
+    if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; setTimeout(type, 300); return; }
+    setTimeout(type, 28);
+  }
+}
+type();
+
+// ===== COUNTER ANIMATION =====
+function animateCounters() {
+  document.querySelectorAll('.num[data-count]').forEach(el => {
+    const target = parseFloat(el.getAttribute('data-count'));
+    const isDecimal = target % 1 !== 0;
+    let current = 0;
+    const step = target / 40;
+    const interval = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = isDecimal ? current.toFixed(1) : Math.round(current);
+      if (current >= target) clearInterval(interval);
+    }, 35);
+  });
+}
+animateCounters();
+
+// ===== FADE-UP OBSERVER =====
+const fadeObs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) setTimeout(() => e.target.classList.add('in'), i * 100);
+  });
+}, { threshold: 0.1 });
+function activateFades() {
+  document.querySelectorAll('.fade-up:not(.in)').forEach(el => fadeObs.observe(el));
+}
+activateFades();
+
+// ===== SCROLL PROGRESS =====
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
+
+// ===== DRAG & DROP =====
+const zone = document.getElementById('upload-zone');
+if (zone) {
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault(); zone.classList.remove('drag');
+    const file = e.dataTransfer.files[0];
+    if (file) processFile(file);
+  });
+}
+
+// ===== RESUME LOGIC =====
+const STORAGE_KEY = 'prp_resume_data';
+const STORAGE_NAME = 'prp_resume_name';
+const STORAGE_DATE = 'prp_resume_date';
+const STORAGE_SIZE = 'prp_resume_size';
+
+function loadResumeState() {
+  const data = localStorage.getItem(STORAGE_KEY);
+  if (data) {
+    showResumeExists(data);
+  } else {
+    document.getElementById('visitor-view').style.display = 'none';
+    document.getElementById('upload-view').style.display = 'grid';
+  }
+}
+
+function showResumeExists(data) {
+  const name = localStorage.getItem(STORAGE_NAME) || 'Resume.pdf';
+  const date = localStorage.getItem(STORAGE_DATE) || 'Unknown date';
+  const size = localStorage.getItem(STORAGE_SIZE) || '';
+  document.getElementById('visitor-view').style.display = 'block';
+  document.getElementById('upload-view').style.display = 'none';
+  document.getElementById('visitor-filename').textContent = name + ' · Uploaded ' + date + (size ? ' · ' + size : '');
+  const dlBtn = document.getElementById('download-btn');
+  dlBtn.href = data;
+  dlBtn.setAttribute('download', name);
+}
+
+function handleFileUpload(input) {
+  if (input.files && input.files[0]) processFile(input.files[0]);
+}
+
+function processFile(file) {
+  const maxMB = 8;
+  if (file.size > maxMB * 1024 * 1024) {
+    showStatus('File too large. Please upload a file under 8MB.', 'error'); return;
+  }
+  showStatus('Reading your file...', 'info');
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const base64 = e.target.result;
+    try {
+      localStorage.setItem(STORAGE_KEY, base64);
+      localStorage.setItem(STORAGE_NAME, file.name);
+      localStorage.setItem(STORAGE_DATE, new Date().toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}));
+      localStorage.setItem(STORAGE_SIZE, (file.size / 1024 < 1024 ? (file.size/1024).toFixed(0) + ' KB' : (file.size/1024/1024).toFixed(1) + ' MB'));
+      showStatus('✅ Resume saved successfully!', 'success');
+      showPreview(base64, file.name);
+      setTimeout(() => showResumeExists(base64), 1200);
+    } catch (err) {
+      showStatus('Storage full. Try a smaller file or clear browser storage.', 'error');
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function showPreview(data, name) {
+  const area = document.getElementById('preview-area');
+  if (name.toLowerCase().endsWith('.pdf')) {
+    area.innerHTML = '<iframe src="' + data + '" style="width:100%;height:500px;border:none;border-radius:var(--radius);"></iframe>';
+  } else {
+    area.innerHTML = '<div style="padding:2rem;text-align:center;"><div style="font-size:3rem;">📄</div><p style="color:var(--teal);font-weight:600;margin-top:0.5rem;">' + name + '</p><p style="color:var(--muted);font-size:0.82rem;margin-top:0.3rem;">File ready to download</p></div>';
+  }
+}
+
+function togglePreview() {
+  const wrap = document.getElementById('pdf-preview-wrap');
+  const iframe = document.getElementById('pdf-iframe');
+  if (wrap.style.display === 'none' || !wrap.style.display) {
+    const data = localStorage.getItem(STORAGE_KEY);
+    const name = localStorage.getItem(STORAGE_NAME) || 'resume.pdf';
+    if (data && name.toLowerCase().endsWith('.pdf')) {
+      iframe.src = data;
+    }
+    wrap.style.display = 'block';
+  } else {
+    wrap.style.display = 'none';
+    iframe.src = '';
+  }
+}
+
+function deleteResume() {
+  if (!confirm('Permanently delete your uploaded resume? This cannot be undone.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(STORAGE_NAME);
+  localStorage.removeItem(STORAGE_DATE);
+  localStorage.removeItem(STORAGE_SIZE);
+  document.getElementById('visitor-view').style.display = 'none';
+  document.getElementById('upload-view').style.display = 'grid';
+  document.getElementById('pdf-preview-wrap').style.display = 'none';
+}
+
+function showAdminPanel() {
+  document.getElementById('visitor-view').style.display = 'none';
+  document.getElementById('upload-view').style.display = 'grid';
+  showStatus('Upload your new resume below — it will replace the current one.', 'info');
+  document.getElementById('upload-view').scrollIntoView({behavior:'smooth'});
+}
+
+function showStatus(msg, type) {
+  const el = document.getElementById('status-msg');
+  el.textContent = msg;
+  el.className = 'status-msg ' + type;
+  el.style.display = 'block';
+  if (type === 'success') setTimeout(() => { el.style.display = 'none'; }, 3500);
+}
+</script>
+</body>
+</html>
