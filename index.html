@@ -354,10 +354,6 @@ footer{
     <button class="nav-tab" onclick="showPage('resume')">Resume</button>
     <button class="nav-tab" onclick="showPage('contact')">Contact</button>
   </div>
-  <div>
-    <a class="btn" href="https://www.linkedin.com/in/priyaranjan31" target="_blank">LinkedIn</a>
-    <a class="btn" href="https://github.com/PriyaParida" target="_blank">GitHub</a>
-  </div>
 </nav>
 
 <!-- ===== HOME ===== -->
@@ -526,14 +522,14 @@ footer{
     <h2>My Resume</h2>
 
     <!-- VISITOR VIEW (shown when resume exists) -->
-    <div id="visitor-view" style="display:none;" class="fade-up">
+    <div id="visitor-view" style="display:block;" class="fade-up">
       <div class="download-card">
         <div style="font-size:3rem;margin-bottom:0.8rem;">📄</div>
         <h3>Priya Ranjan Parida</h3>
         <p id="visitor-filename">Data Engineer Resume</p>
         <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem;">
           <a id="download-btn" class="btn-p" href="#" download>⬇ Download Resume</a>
-          <button class="btn-s" onclick="togglePreview()">👁 Preview</button>
+          <a class="btn-s" href="resume.pdf" target="_blank">👁 Preview</a>
         </div>
         <div id="pdf-preview-wrap" style="display:none;margin-top:1.5rem;border-radius:var(--radius);overflow:hidden;">
           <iframe id="pdf-iframe" src="" style="width:100%;height:600px;border:none;border-radius:var(--radius);"></iframe>
@@ -596,6 +592,15 @@ footer{
           <div class="ci">📞</div><div class="cl">Phone</div>
           <div class="cv">+91 6371 304 502</div>
         </a>
+        <a class="ccard" href="https://www.linkedin.com/in/priyaranjan31" target="_blank">
+            <div class="ci">💼</div><div class="cl">LinkedIn</div>
+            <div class="cv">linkedin.com/in/priyaranjan31</div>
+        </a>
+        <a class="ccard" href="https://github.com/PriyaParida" target="_blank">
+          <div class="ci">💻</div><div class="cl">GitHub</div>
+          <div class="cv">github.com/PriyaParida</div>
+        </a>
+        
         <div class="ccard">
           <div class="ci">📍</div><div class="cl">Location</div>
           <div class="cv">Bengaluru, Karnataka<br>India</div>
